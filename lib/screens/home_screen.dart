@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/transacao.dart';
 import 'add_transacao_screen.dart';
-import '../widgets/grafico_pizza.dart';
 import 'dart:math';
 
 class HomeScreen extends StatefulWidget {
@@ -28,24 +27,47 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  double get _saldo {
-    return _transacoes.fold(0.0, (soma, t) {
-      return t.tipo == 'receita' ? soma + t.valor : soma - t.valor;
+  void _editarTransacao(
+      Transacao transacao, String descricao, double valor, String tipo) {
+    setState(() {
+      final index = _transacoes.indexWhere((t) => t.id == transacao.id);
+      if (index != -1) {
+        _transacoes[index] = Transacao(
+          id: transacao.id,
+          descricao: descricao,
+          valor: valor,
+          tipo: tipo,
+          data: DateTime.now(),
+        );
+      }
     });
   }
 
+  void _removerTransacao(String id) {
+    setState(() {
+      _transacoes.removeWhere((t) => t.id == id);
+    });
+  }
+
+  double get _saldo => _transacoes.fold(
+      0.0, (soma, t) => t.tipo == 'receita' ? soma + t.valor : soma - t.valor);
   double get _totalReceitas => _transacoes
       .where((t) => t.tipo == 'receita')
       .fold(0.0, (soma, t) => soma + t.valor);
-
   double get _totalDespesas => _transacoes
       .where((t) => t.tipo == 'despesa')
       .fold(0.0, (soma, t) => soma + t.valor);
 
-  void _abrirNovaTransacao(BuildContext context) {
+  void _abrirFormulario({Transacao? transacao}) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => AddTransacaoScreen(onAdd: _addTransacao),
+        builder: (_) => AddTransacaoScreen(
+          onSalvar: transacao == null
+              ? _addTransacao
+              : (descricao, valor, tipo) =>
+                  _editarTransacao(transacao, descricao, valor, tipo),
+          transacao: transacao,
+        ),
       ),
     );
   }
@@ -54,76 +76,67 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gastos Mensais'),
+        title: Text('Gastos Mensais'),
       ),
       body: Column(
         children: [
-          Card(
-            margin: const EdgeInsets.all(12),
-            elevation: 4,
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                children: [
-                  const Text(
-                    'Saldo Atual',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    'R\$ ${_saldo.toStringAsFixed(2)}',
-                    style: TextStyle(
-                      fontSize: 26,
-                      color: _saldo >= 0 ? Colors.green : Colors.red,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _buildResumo('Saldo', _saldo, Colors.indigo),
+                _buildResumo('Receitas', _totalReceitas, Colors.green),
+                _buildResumo('Despesas', _totalDespesas, Colors.red),
+              ],
             ),
-          ),
-          GraficoPizza(
-            totalReceitas: _totalReceitas,
-            totalDespesas: _totalDespesas,
           ),
           Expanded(
             child: _transacoes.isEmpty
-                ? const Center(child: Text('Nenhuma transação ainda.'))
+                ? Center(child: Text('Nenhuma transação.'))
                 : ListView.builder(
                     itemCount: _transacoes.length,
                     itemBuilder: (ctx, i) {
                       final t = _transacoes[i];
-                      return ListTile(
-                        leading: CircleAvatar(
-                          backgroundColor:
-                              t.tipo == 'receita' ? Colors.green : Colors.red,
-                          child: Icon(
-                            t.tipo == 'receita'
-                                ? Icons.arrow_downward
-                                : Icons.arrow_upward,
-                            color: Colors.white,
-                          ),
-                        ),
-                        title: Text(t.descricao),
-                        subtitle: Text(
-                            '${t.data.day}/${t.data.month}/${t.data.year}'),
-                        trailing: Text(
-                          'R\$ ${t.valor.toStringAsFixed(2)}',
-                          style: TextStyle(
-                            color:
-                                t.tipo == 'receita' ? Colors.green : Colors.red,
-                            fontWeight: FontWeight.bold,
+                      return Card(
+                        child: ListTile(
+                          title: Text(t.descricao),
+                          subtitle: Text('R\$ ${t.valor.toStringAsFixed(2)}'),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                icon: Icon(Icons.edit, color: Colors.blue),
+                                onPressed: () => _abrirFormulario(transacao: t),
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.delete, color: Colors.red),
+                                onPressed: () => _removerTransacao(t.id),
+                              ),
+                            ],
                           ),
                         ),
                       );
                     },
                   ),
-          ),
+          )
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _abrirNovaTransacao(context),
-        child: const Icon(Icons.add),
+        onPressed: () => _abrirFormulario(),
+        child: Icon(Icons.add),
       ),
+    );
+  }
+
+  Widget _buildResumo(String label, double valor, Color cor) {
+    return Column(
+      children: [
+        Text(label, style: TextStyle(fontWeight: FontWeight.bold)),
+        SizedBox(height: 4),
+        Text('R\$ ${valor.toStringAsFixed(2)}',
+            style: TextStyle(color: cor, fontSize: 18)),
+      ],
     );
   }
 }
