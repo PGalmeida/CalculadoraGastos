@@ -72,12 +72,16 @@ Use serviços como GitHub Pages, Netlify ou Vercel para hospedar os arquivos da 
 
 ## 🖼️ Prints da aplicação
 
-*(adicione imagens aqui para mostrar as telas)*
+![preview](https://imgur.com/nM84fiV.png)
+![preview](https://imgur.com/ToCkjO1.png)
+![preview](https://imgur.com/dcZcv6s.png)
+![preview](https://imgur.com/e3Nu1tv.png)
+![preview](https://imgur.com/AS6orKP.png)
 
 ---
 
 ## 📦 Link para APK / Versão Web
 
-- Baixar APK  
-- Testar versão Web
+- [Baixar APK](https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://flutlab.io/apk/aHR0cHM6Ly9hcGkuZmx1dGxhYi5pby9wcm9qZWN0cy8yNjYxOTIyL2Rvd25sb2FkLWFwcD9rZXk9aHl1M2NtYjZzYmJnMXd5Mmsya3AmdGFyZ2V0PWFsbA==)
+- [Testar Versão Web](https://preview.flutlab.io/pedro_gomes4/calculadora-gastos-mensais/)
 
