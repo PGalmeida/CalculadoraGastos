@@ -64,9 +64,9 @@ Arquivos gerados em:
 
 ---
 
-## 🖼️ Vídeo da aplicação
+## 🎥 Vídeo da aplicação
 
-Use serviços como GitHub Pages, Netlify ou Vercel para hospedar os arquivos da pasta `build/web`.
+![Demonstração](https://imgur.com/fVchtmB.gif)
 
 ---
 
