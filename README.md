@@ -1,19 +1,83 @@
-# Calculadora Gastos Mensais
 
-A new Flutter project created with FlutLab - https://flutlab.io
+# Calculadora de Gastos
 
-## Getting Started
+Aplicativo desenvolvido em Flutter para o controle de gastos. Permite ao usuário adicionar despesas, visualizar o total gasto e acompanhar um histórico de transações.
 
-A few resources to get you started if this is your first Flutter project:
+---
 
-- https://flutter.dev/docs/get-started/codelab
-- https://flutter.dev/docs/cookbook
+## ✅ Funcionalidades
 
-For help getting started with Flutter, view our
-https://flutter.dev/docs, which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Adicionar novos gastos
+- Visualizar lista de despesas
+- Exibir total de gastos
+- Gráfico de distribuição dos gastos
+- Design responsivo para web e mobile
 
-## Getting Started: FlutLab - Flutter Online IDE
+---
 
-- How to use FlutLab? Please, view our https://flutlab.io/docs
-- Join the discussion and conversation on https://flutlab.io/residents
+## 🚀 Tecnologias utilizadas
+
+- **Flutter** (versão: consulte o arquivo `pubspec.yaml`)
+- **Dart**
+- **Flutter Web**
+
+---
+
+## 📲 Como rodar o projeto
+
+Siga os passos abaixo para instalar e executar a Calculadora de Gastos:
+
+1. Clone o repositório  
+```bash
+git clone https://github.com/PGalmeida/CalculadoraGastos.git
+cd CalculadoraGastos
+```
+
+2. Instale as dependências  
+```bash
+flutter pub get
+```
+
+3. Rode o projeto  
+No emulador ou dispositivo físico:  
+```bash
+flutter run
+```
+
+---
+
+## 🛠️ Gerar build
+
+### APK para Android  
+```bash
+flutter build apk --release
+```
+O APK estará em:  
+`build/app/outputs/flutter-apk/app-release.apk`
+
+### Versão Web  
+```bash
+flutter build web
+```
+Arquivos gerados em:  
+`build/web`
+
+---
+
+## 🖼️ Vídeo da aplicação
+
+Use serviços como GitHub Pages, Netlify ou Vercel para hospedar os arquivos da pasta `build/web`.
+
+---
+
+## 🖼️ Prints da aplicação
+
+*(adicione imagens aqui para mostrar as telas)*
+
+---
+
+## 📦 Link para APK / Versão Web
+
+- Baixar APK  
+- Testar versão Web
+
