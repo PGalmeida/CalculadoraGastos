@@ -66,7 +66,7 @@ Arquivos gerados em:
 
 ## 🎥 Vídeo da aplicação
 
-![Demonstração](https://imgur.com/fVchtmB.gif)
+👉 [Clique aqui para ver o GIF de demonstração](https://imgur.com/fVchtmB)
 
 ---
 
